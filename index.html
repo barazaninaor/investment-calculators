@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Portfolio Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h2 id="pageTitle">Value Calculator</h2>
+
+    <select id="calculatorType" onchange="toggleCalculator()">
+        <option value="value">Value Calculator</option>
+        <option value="yield">Yield Calculator</option>
+        <option value="channels">Channels Calculator</option>
+    </select>
+
+    <div id="valueCalc" class="calc-section">
+        <div class="box">
+            <h3>Previous Month</h3>
+            <div class="input-row">
+                <label>Value:</label>
+                <input id="value" type="text" placeholder="Previous Month Balance" oninput="formatValue(this)">
+            </div>
+            <div class="input-row">
+                <label>YTD %:</label>
+                <input id="ytd" type="number" step="any" placeholder="Year to Date">
+            </div>
+            <div class="input-row">
+                <label>ITD %:</label>
+                <input id="itd" type="number" step="any" placeholder="Inception to Date">
+            </div>
+        </div>
+        <div class="box">
+            <h3>Current Month</h3>
+            <div class="input-row">
+                <label>MTD %:</label>
+                <input id="mtd" type="number" step="any" placeholder="Month to Date">
+            </div>
+        </div>
+        <button onclick="calculateValue()">Calculate</button>
+        <button onclick="recalculateValue()">Recalculate</button>
+        <button class="secondary-btn" onclick="copyToYield()">Copy to Yield Calculator</button>
+
+        <div class="results">
+            <h3>Results</h3>
+            <div class="results-grid">
+                <div>MTD:</div> <div id="newMTDResult">-</div> <button class="copy-btn" onclick="copyValue('newMTDResult', this)">Copy</button>
+                <div>New Value:</div> <div id="newValue">-</div> <button class="copy-btn" onclick="copyValue('newValue', this)">Copy</button>
+                <div>New YTD:</div> <div id="newYTD">-</div> <button class="copy-btn" onclick="copyValue('newYTD', this)">Copy</button>
+                <div>New ITD:</div> <div id="newITD">-</div> <button class="copy-btn" onclick="copyValue('newITD', this)">Copy</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="yieldCalc" class="calc-section" style="display:none">
+        <div class="box">
+            <h3>Balances</h3>
+            <div class="input-row"><label>Opening:</label><input id="openBal" type="text" placeholder="Opening Balance" oninput="formatValue(this)"></div>
+            <div class="input-row"><label>Year End:</label><input id="yearEndBal" type="text" placeholder="Year End Balance" oninput="formatValue(this)"></div>
+            <div class="input-row"><label>Previous:</label><input id="prevBal" type="text" placeholder="Previous Month Balance" oninput="formatValue(this)"></div>
+            <div class="input-row"><label>Current:</label><input id="currBal" type="text" placeholder="Current Month Balance" oninput="formatValue(this)"></div>
+        </div>
+        <button onclick="calculateYield()">Calculate</button>
+        <button class="secondary-btn" onclick="copyToValue()">Copy to Value Calculator</button>
+
+        <div class="results">
+            <h3>Results</h3>
+            <div class="results-grid">
+                <div>MTD:</div> <div id="yieldMTD">-</div> <button class="copy-btn" onclick="copyValue('yieldMTD', this)">Copy</button>
+                <div>YTD:</div> <div id="yieldYTD">-</div> <button class="copy-btn" onclick="copyValue('yieldYTD', this)">Copy</button>
+                <div>ITD:</div> <div id="yieldITD">-</div> <button class="copy-btn" onclick="copyValue('yieldITD', this)">Copy</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="channelsCalc" class="calc-section" style="display:none">
+        <div class="box">
+            <h3>Input Channels</h3>
+            <div id="channelsHeader" class="channel-row header">
+                <span style="flex: 1.2;">Channel</span>
+                <span style="flex: 1;">Amount</span>
+                <span style="flex: 0.6; text-align: center;">Exp %</span>
+                <span style="width: 25px;"></span>
+            </div>
+            <div id="channelsContainer"></div>
+            <button onclick="addChannelRow()">+ Add Channel</button>
+            
+            <div class="input-row" style="margin-top: 15px; border-top: 1px solid #3f3b63; padding-top: 15px;">
+                <label style="width: 100px;">New Total:</label>
+                <input id="newTotalAmount" type="text" placeholder="Desired Total" oninput="formatValue(this)">
+            </div>
+        </div>
+
+        <button onclick="calculateChannels()">Calculate Distribution</button>
+
+        <div id="channelsResultsArea" class="results" style="display: none;">
+            <h3>Distribution Results</h3>
+            <div id="resultsTableContainer" class="results-grid"></div>
+            <div style="margin-top: 15px; padding-top: 10px; border-top: 1px solid #3f3b63; font-size: 13px; text-align: center; color: #cfd0ff;">
+                Total Original Value: <span id="totalOrigVal" style="font-weight: bold; color: white;">-</span>
+            </div>
+        </div>
+    </div>
+
+    <button id="resetBtn" onclick="resetAll()">Reset All Data</button>
+
+    <script src="script.js"></script>
+</body>
+</html>
