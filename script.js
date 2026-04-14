@@ -192,24 +192,12 @@ function copyValue(elementId, btn) {
     setTimeout(() => { btn.innerText = originalText; }, 1200);
 }
 
-// כפתור ה-Reset המעודכן שמנקה הכל ידנית
 function resetAll() {
-    // 1. ניקוי כל ה-Inputs
     document.querySelectorAll("input").forEach(input => input.value = "");
-    
-    // 2. איפוס כל טקסט התוצאות
     document.querySelectorAll(".results-grid div[id]").forEach(div => div.innerText = "-");
-    
-    // 3. איפוס ספציפי של ה-Total ב-Channels
     if(document.getElementById("totalOrigVal")) document.getElementById("totalOrigVal").innerText = "-";
-    
-    // 4. הסתרת אזור תוצאות ה-Channels
     document.getElementById("channelsResultsArea").style.display = "none";
-    
-    // 5. אתחול מחדש של שורות ה-Channels למצב ברירת מחדל
     initChannels();
-    
-    // 6. חזרה למחשבון הראשון (אופציונלי - אם תרצה)
     document.getElementById("calculatorType").value = "value";
     toggleCalculator();
 }
